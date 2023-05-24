@@ -21,7 +21,7 @@
 |  GPU | `Ampere`架构</br>`1024 NVIDIA CUDA核心` + `32 Tensor核心` | 
 | SoC | `tegra23x` |
 | 内存/显存 | 共用</br>`8GB` |
-| 存储 | `128GB M.2 SSD</br>无SD卡` |
+| 存储 | `128GB M.2 SSD`</br>`无SD卡` |
 | 功率 | `7W` ~ `15W` |
 | `AI`算力 | `40TOPS` |
 | 参考价格（RMB）| 3700 |
