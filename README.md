@@ -20,7 +20,7 @@
 |  CPU | `6`核`aarch64 (ARM)` `Cortex-A78AE v8.2` |
 |  GPU | `Ampere`架构</br>`1024 NVIDIA CUDA核心` + `32 Tensor核心` | 
 | SoC | `tegra23x` |
-| 内存/显存 | 共用</br>`8GB` |
+| 内存/显存 | `共享8GB` |
 | 存储 | `128GB M.2 SSD`</br>`无SD卡` |
 | 功率 | `7W` ~ `15W` |
 | `AI`算力 | `40TOPS` |
