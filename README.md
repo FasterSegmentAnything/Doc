@@ -16,7 +16,7 @@
 
 | 类型 | 简述 |
 | :-- | :-- |
-| 名称 | NVIDIA出品</br>`Jetson Orin Nano Developer Kit(8GB)` |
+| 名称 | `NVIDIA产品`</br>`Jetson Orin Nano Developer Kit(8GB)` |
 |  CPU | `6`核`aarch64 (ARM)` `Cortex-A78AE v8.2` |
 |  GPU | `Ampere`架构</br>`1024 NVIDIA CUDA核心` + `32 Tensor核心` | 
 | SoC | `tegra23x` |
