@@ -29,7 +29,7 @@
 
 | 类型 | 简述 |
 | :-- | :-- |
-| 系统 | `Ubuntu 18.04` |
+| 系统 | `Ubuntu 20.04.5 LTS (GNU/Linux 5.10.104-tegra aarch64)` |
 
 
 # 关于
