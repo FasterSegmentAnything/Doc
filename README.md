@@ -50,7 +50,7 @@ jtop
 
 # 关于
 
-* [论文原文](files\related\paper.pdf)
+* [论文原文](files/related/paper.pdf)
 * [官方网站](https://segment-anything.com/)
 * 作者
   * [yutian](https://www.aflyingfish.top/)
