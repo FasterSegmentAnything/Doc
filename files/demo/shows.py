@@ -9,7 +9,7 @@ def show_mask(mask, ax=None):
     h, w = mask.shape[-2:]
     mask_image = mask.reshape(h, w, 1) * color.reshape(1, 1, -1)
     # ax.imshow(mask_image)
-    cv2.imwrite("outputs/mask_output.jpg", mask_image)
+    cv2.imwrite("outputs/mask_output.png", mask_image)
     
 def show_points(coords, labels, marker_size=375, ax=None):
     pos_points = coords[labels==1]
@@ -28,7 +28,7 @@ def show_image(image_jpg_path):
     # plt.imshow(image)
     # plt.axis('on')
     # plt.show()
-    cv2.imwrite("outputs/image_output.jpg", img)
+    cv2.imwrite("outputs/image_output.png", img)
 
 def show_anns(anns):
     if len(anns) == 0:
@@ -43,4 +43,9 @@ def show_anns(anns):
         m = ann['segmentation']
         color_mask = np.concatenate([np.random.random(3), [0.35]])
         img[m] = color_mask
-    cv2.imwrite("outputs/image_output.jpg", img)
+    ax.imshow(img)
+
+    plt.savefig("outputs/anns_output.png")
+    # cv2.imwrite("outputs/image_output.png", img)  # 无法显示
+
+    plt.show()
