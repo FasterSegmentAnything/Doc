@@ -3,6 +3,9 @@
 - [实验环境](#实验环境)
   - [硬件：](#硬件)
   - [软件：](#软件)
+  - [segment-anything模型版本](#segment-anything模型版本)
+- [segment-anything安装](#segment-anything安装)
+- [使用方式](#使用方式)
 - [关于](#关于)
 
 # 说明
@@ -75,6 +78,10 @@ git clone git@github.com:facebookresearch/segment-anything.git
 cd segment-anything
 pip3 install -e .
 ```
+
+# 使用方式
+
+[文档](files/demo/README.md)
 
 # 关于
 
