@@ -49,7 +49,7 @@ jtop
 | Python | `3.8.10`  |
 | Vulkan | `1.3.204` |
 | Jetpack | `5.1.1`  |
-| pytorch | `2.0.0` |
+| pytorch | `2.0.1` |
 | onnxruntime(python版) | `1.15.0` |
 | onnxruntime(C++版) | `1.12.1` |
 | opencv-python | `4.7.0` |
@@ -59,7 +59,7 @@ jtop
 | protobuf | `3.20.3` |
 | typing-extensions | `4.5.0` |
 | onnx | `1.13.1` |
-| torchvision | `2.0.1` |
+| torchvision | `0.15.2` |
 
 
 硬件环境部署可使用`NVIDIA`提供的`SDK Manager`工具，宿主机磁盘空间和内存一定要大，否则可能引发各种错误，推荐配置如下：
@@ -71,11 +71,11 @@ jtop
 ## 3、segment-anything模型版本
 > 可在[页面](https://github.com/FasterSegmentAnything/segment-anything#model-checkpoints)下载
 
-| 类型 | 简述 |
-| :-- | :-- |
+| 类型 | 版本 | 文件 | 下载链接 | 状态 |
+| :-- | :-- | :-- | :-- | :-- |
 | 名称 | `segment-anything` |
-| 版本 | `SAM_VIT_H 4b8939` |
-| 下载地址| [链接](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth)  | 
+| `SAM_VIT_H` | `SAM_VIT_H 4b8939` | [文件](files/demo/pytorch_model/sam_vit_h_4b8939.pth) | [链接](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth)  | 内存需求过大，暂时弃用 |
+| `SAM_VIT_B` | `SAM_VIT_B 01ec64` | [文件](files/demo/pytorch_model/sam_vit_b_01ec64.pth) | [链接](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth)  | 使用中 |
 
 # 三、segment-anything安装
 

@@ -33,7 +33,7 @@ FasterSegmentAnything       # 位于`~/`所指代的目录（即home目录）
 
 ```shell
 pip3 install opencv-python pycocotools matplotlib onnxruntime onnx
-pip3 install torchvision
+pip3 install torch torchvision opencv-contrib-python
 ```
 
 ## 3. 导出过程
@@ -41,15 +41,19 @@ pip3 install torchvision
 ``` shell
 cd ~/FasterSegmentAnything/segment-anything/
 python3 scripts/export_onnx_model.py --checkpoint ../Models/raw_model/sam_vit_h_4b8939.pth --model-type default --output ../Models/onnx/SAM-VITh.onnx
-
+python3 scripts/export_onnx_model.py --checkpoint ../Models/raw_model/sam_vit_b_01ec64.pth --model-type vit_b --output ../Models/onnx/SAM-VITb.onnx
 # 此处model-type取决于下载的模型，可选项为：`default`、`vit_h`、`vit_l`、`vit_b`
-```
 
-> 输出
+```
+> 输出(示例)
 > Loading model...
+> 
 > Exporting onnx model to ../Models/onnx/SAM-VITh.onnx...
+> 
 > ================ Diagnostic Run torch.onnx.export version 2.0.1 ================
+> 
 > verbose: False, log level: Level.ERROR
+> 
 > ======================= 0 NONE 0 NOTE 0 WARNING 0 ERROR ========================
 > 
 > Model has successfully been run with ONNXRuntime.
@@ -60,8 +64,10 @@ python3 scripts/export_onnx_model.py --checkpoint ../Models/raw_model/sam_vit_h_
 FasterSegmentAnything       # 位于`~/`所指代的目录（即home目录）
 ├── Models
 │   ├── onnx
+│   │   ├── SAM-VITb.onnx
 │   │   └── SAM-VITh.onnx
 │   └── raw_model
+│       ├── sam_vit_b_01ec64.pth
 │       └── sam_vit_h_4b8939.pth
 └── segment-anything        #（为segment-anything项目）
     └── 省略
