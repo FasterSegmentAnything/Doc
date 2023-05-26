@@ -49,8 +49,22 @@ jtop
 | Python | `3.8.10`  |
 | Vulkan | `1.3.204` |
 | Jetpack | `5.1.1`  |
+| pytorch | `2.0.0` |
+| onnxruntime(python版) | `1.15.0` |
+| onnxruntime(C++版) | `1.12.1` |
+| opencv-python | `4.7.0` |
+| pycocotools | `2.0.6` |
+| numpy | `1.24.3` |
+| matplotlib | `3.1.2` |
+| protobuf | `3.20.3` |
+| typing-extensions | `4.5.0` |
+| onnx | `1.13.1` |
+| torchvision | `2.0.1` |
+
 
 硬件环境部署可使用`NVIDIA`提供的`SDK Manager`工具，宿主机磁盘空间和内存一定要大，否则可能引发各种错误，推荐配置如下：
+* 虚拟机建议采用`Ubuntu>=18.04`
+* `apt-get`的source.list尽可能采用默认，测试中阿里源会导致error
 * 磁盘`>150GB`（可用不小于120GB）
 * 内存`>=6GB`
 
