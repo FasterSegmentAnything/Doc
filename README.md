@@ -51,6 +51,21 @@ jtop
 * 磁盘`>150GB`（可用不小于120GB）
 * 内存`>=6GB`
 
+# segment-anything安装
+
+```shell
+# 依赖项安装
+pip3 install opencv-python pycocotools matplotlib onnxruntime onnx
+
+# 添加环境变量
+# 向/etc/profile、~/.bashrc末尾添加"export PATH=/home/jetson/.local/bin:$PATH"
+# 通过source /etc/profile && source ~/.bashrc使其生效
+
+# 安装segment-anything
+git clone git@github.com:facebookresearch/segment-anything.git
+cd segment-anything
+pip3 install -e .
+```
 
 # 关于
 
