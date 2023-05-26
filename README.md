@@ -51,6 +51,15 @@ jtop
 * 磁盘`>150GB`（可用不小于120GB）
 * 内存`>=6GB`
 
+## segment-anything模型版本
+> 可在[页面](https://github.com/FasterSegmentAnything/segment-anything#model-checkpoints)下载
+
+| 类型 | 简述 |
+| :-- | :-- |
+| 名称 | `segment-anything` |
+| 版本 | `SAM_VIT_H 4b8939` |
+| 下载地址| [链接](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth)  | 
+
 # segment-anything安装
 
 ```shell
@@ -71,5 +80,6 @@ pip3 install -e .
 
 * [论文原文](files/related/paper.pdf)
 * [官方网站](https://segment-anything.com/)
+* [模型下载地址](https://github.com/FasterSegmentAnything/segment-anything#model-checkpoints)
 * 作者
   * [yutian](https://www.aflyingfish.top/)
