@@ -49,9 +49,9 @@ jtop
 | Python | `3.8.10`  |
 | Vulkan | `1.3.204` |
 | Jetpack | `5.1.1`  |
-| pytorch | `2.0.1` |
-| onnxruntime(python版) | `1.15.0` |
-| onnxruntime(C++版) | `1.12.1` |
+| pytorch | 自构建`2.0.1` |
+| onnxruntime-GPU(python版) |  自构建`1.12.1` |
+| onnxruntime-GPU(C++版) |  自构建`1.12.1` |
 | opencv-python | `4.7.0` |
 | pycocotools | `2.0.6` |
 | numpy | `1.24.3` |
@@ -61,6 +61,16 @@ jtop
 | onnx | `1.13.1` |
 | torchvision | `0.15.2` |
 
+> onnxruntime安装：
+> 
+> 编译：./build.sh  --skip_tests --use_cuda --config Release --build_shared_lib --parallel 6  --build_wheel  --cuda_home /usr/local/cuda --cudnn_home /usr/local/cuda
+>
+> C++版本安装：添加环境变量
+>
+> python版本安装：cd build/Linux/Release/dist && pip3 install ./onnxruntime_gpu-1.12.1-cp38-cp38-linux_aarch64.whl 
+
+> pytorch安装参考：
+> * https://blog.csdn.net/github_34897521/article/details/105123812
 
 硬件环境部署可使用`NVIDIA`提供的`SDK Manager`工具，宿主机磁盘空间和内存一定要大，否则可能引发各种错误，推荐配置如下：
 * 虚拟机建议采用`Ubuntu>=18.04`
