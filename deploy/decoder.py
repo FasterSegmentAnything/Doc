@@ -68,10 +68,8 @@ class Decoder:
         for i in range(epoch):
             self.session.run(None, x)
     
-        mem = psutil.virtual_memory()
-        print(float(mem.free) / 1024 / 1024 / 1024)
-        mem = psutil.virtual_memory()
-        print(float(mem.free) / 1024 / 1024 / 1024)
+        # mem = psutil.virtual_memory()
+        # print(float(mem.free) / 1024 / 1024 / 1024)
 
     def run(self,
             img_embeddings: np.ndarray,
@@ -100,8 +98,8 @@ class Decoder:
         Returns:
             dict: the segment results.
         """
-        mem = psutil.virtual_memory()
-        print(float(mem.free) / 1024 / 1024 / 1024)
+        # mem = psutil.virtual_memory()
+        # print(float(mem.free) / 1024 / 1024 / 1024)
 
         if point_coords is None and point_labels is None and boxes is None:
             raise ValueError("Unable to segment, please input at least one box or point.")
@@ -152,12 +150,9 @@ class Decoder:
                       "has_mask_input": has_mask_input,
                       "orig_im_size": np.array(origin_image_size, dtype=np.float32)}
         
-        mem = psutil.virtual_memory()
-        print(float(mem.free) / 1024 / 1024 / 1024)
         res = self.session.run(None, input_dict)
-
-        mem = psutil.virtual_memory()
-        print(float(mem.free) / 1024 / 1024 / 1024)
+        # mem = psutil.virtual_memory()
+        # print(float(mem.free) / 1024 / 1024 / 1024)
 
         result_dict = dict()
         for i in range(len(res)):

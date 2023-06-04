@@ -9,7 +9,10 @@
 - [五、关于](#五关于)
 
 # 一、说明
-分析[segment-anything](https://segment-anything.com/)的工作原理、部署流程、使用技巧及其它。
+
+> Github仓库commit版本：6fdee8f2727f4506cfbbe553e23b895e27956588
+
+解析[segment-anything](https://segment-anything.com/)项目。
 
 # 二、实验环境
 
@@ -49,7 +52,7 @@ jtop
 | Python | `3.8.10`  |
 | Vulkan | `1.3.204` |
 | Jetpack | `5.1.1`  |
-| pytorch | 自构建`2.0.1` |
+| pytorch | 自构建`2.1.0a0+gitc9f4f01` |
 | onnxruntime-GPU(python版) |  自构建`1.12.1` |
 | onnxruntime-GPU(C++版) |  自构建`1.12.1` |
 | opencv-python | `4.7.0` |
@@ -59,7 +62,7 @@ jtop
 | protobuf | `3.20.3` |
 | typing-extensions | `4.5.0` |
 | onnx | `1.13.1` |
-| torchvision | `0.15.2` |
+| torchvision | 自构建`0.16.0a0+01b9faa` |
 
 > onnxruntime安装：
 > 
@@ -84,8 +87,8 @@ jtop
 | 类型 | 版本 | 文件 | 下载链接 | 状态 |
 | :-- | :-- | :-- | :-- | :-- |
 | 名称 | `segment-anything` |
-| `SAM_VIT_H` | `SAM_VIT_H 4b8939` | [文件](files/demo/pytorch_model/sam_vit_h_4b8939.pth) | [链接](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth)  | 内存需求过大，暂时弃用 |
-| `SAM_VIT_B` | `SAM_VIT_B 01ec64` | [文件](files/demo/pytorch_model/sam_vit_b_01ec64.pth) | [链接](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth)  | 使用中 |
+| `SAM_VIT_H` | `SAM_VIT_H 4b8939` | [本地文件](files/pytorch_model/sam_vit_h_4b8939.pth) | [链接](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth)  | 内存需求过大，暂时弃用 |
+| `SAM_VIT_B` | `SAM_VIT_B 01ec64` | [本地文件](files/pytorch_model/sam_vit_b_01ec64.pth) | [链接](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth)  | 使用中 |
 
 # 三、segment-anything安装
 
@@ -105,7 +108,7 @@ pip3 install -e .
 
 # 四、使用方式
 
-[文档](files/demo/README.md)
+[文档](usage.md)
 
 # 五、关于
 

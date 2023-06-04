@@ -62,19 +62,16 @@ class Vit:
             epoch (int): warmup epoch.
         """
 
-        mem = psutil.virtual_memory()
-        print(float(mem.free) / 1024 / 1024 / 1024)
+        # mem = psutil.virtual_memory()
+        # print(float(mem.free) / 1024 / 1024 / 1024)
         input_dict={self.input_name: np.random.random(self.input_shape).astype(np.float32)}
-        mem = psutil.virtual_memory()
-        print(float(mem.free) / 1024 / 1024 / 1024)
+        # mem = psutil.virtual_memory()
+        # print(float(mem.free) / 1024 / 1024 / 1024)
 
         for _ in range(epoch):
             self.session.run(None, input_dict)
-        mem = psutil.virtual_memory()
-        print(float(mem.free) / 1024 / 1024 / 1024)
-
-        mem = psutil.virtual_memory()
-        print(float(mem.free) / 1024 / 1024 / 1024)
+        # mem = psutil.virtual_memory()
+        # print(float(mem.free) / 1024 / 1024 / 1024)
 
     def _extract_feature(self, tensor: np.ndarray) -> np.ndarray:
         """extract image feature
@@ -124,12 +121,12 @@ class Vit:
         Returns:
             np.ndarray: the input image`s feature.
         """
-        mem = psutil.virtual_memory()
-        print(float(mem.free) / 1024 / 1024 / 1024)
+        # mem = psutil.virtual_memory()
+        # print(float(mem.free) / 1024 / 1024 / 1024)
         tensor = self.transform(img)
-        mem = psutil.virtual_memory()
-        print(float(mem.free) / 1024 / 1024 / 1024)
+        # mem = psutil.virtual_memory()
+        # print(float(mem.free) / 1024 / 1024 / 1024)
         features = self._extract_feature(tensor)
-        mem = psutil.virtual_memory()
-        print(float(mem.free) / 1024 / 1024 / 1024)
+        # mem = psutil.virtual_memory()
+        # print(float(mem.free) / 1024 / 1024 / 1024)
         return features
