@@ -8,7 +8,9 @@ from deploy.predictor import SamPredictor
 import models
 
 # 输入
-image="demo3.jpg"
+# image="demo1.jpg"
+image="demo2.png"
+# image="demo3.jpg"
 mymodel=models.SAM_VIT_B            # 使用的模型
 enableWarmup=False                  # 是否启动系统预热
 output=""
@@ -29,7 +31,7 @@ points = []
 boxes = []
 box_point = []
 img_copy = img.copy()
-get_first_box_point = False
+get_first_box_point = False     # 用于读取box两点时的flag
 
 
 def change_box(box):
@@ -42,17 +44,23 @@ def change_box(box):
 
 def draw_circle(event, x, y, flags, param):
     global img, get_first_box_point, box_point
-    if event == cv2.EVENT_LBUTTONDOWN and not get_first_box_point:
+    if event == cv2.EVENT_LBUTTONDOWN and not get_first_box_point and flags!=cv2.EVENT_FLAG_CTRLKEY+cv2.EVENT_LBUTTONDOWN:
+        # ctrl+左键
         print("Add point:", (x, y))
         points.append([x, y])
 
-        # 计算一次推理，输入点和框
+        # 计算一次推理，输入点和框，生成cover图
         mask = predictor.get_mask(points, [1]*len(points), boxes if boxes != [] else None)
 
+        # 推理结果解码成图片
         mask = mask["masks"][0][0][:, :, None]
         cover = np.ones_like(img) * 255
         cover = cover * mask
         cover = np.uint8(cover)
+
+        # cv2.addWeighted即将`原图`与`cover图`合为一张图
+        # 合成时各像素通道值的计算公式：dst(I) = saturate(src1(I) ∗ 0.6 + src2(I) ∗ 0.4 + 0)
+        # 此处0.6和0.4可修改，一般建议和为1.0
         img = cv2.addWeighted(img_copy, 0.6, cover, 0.4, 0)
 
         for b in boxes:
@@ -64,7 +72,8 @@ def draw_circle(event, x, y, flags, param):
             # 蓝色绘制框左上角的点
             cv2.circle(img, (p[0], p[1]), 5, (255, 0, 0), -1)
 
-    elif event == cv2.EVENT_RBUTTONDOWN:
+    elif  event==cv2.EVENT_LBUTTONDOWN and flags==cv2.EVENT_FLAG_CTRLKEY+cv2.EVENT_LBUTTONDOWN:
+        # ctrl+左键
         if not get_first_box_point:
             box_point.append(x)
             box_point.append(y)
@@ -77,14 +86,18 @@ def draw_circle(event, x, y, flags, param):
             boxes.append(box_point)
             print("add box:", box_point)
 
-            mask = predictor.get_mask(points if points != [] else None,
-                                      [1 for i in range(len(points))] if points != [] else None,
-                                      boxes)
+            # 计算一次推理，输入点和框，生成cover图
+            mask = predictor.get_mask(points if points != [] else None, [1 for i in range(len(points))] if points != [] else None, boxes)
 
+            # 推理结果解码成图片
             mask = mask["masks"][0][0][:, :, None]
             cover = np.ones_like(img) * 255
             cover = cover * mask
             cover = np.uint8(cover)
+
+            # cv2.addWeighted即将`原图`与`cover图`合为一张图
+            # 合成时各像素通道值的计算公式：dst(I) = saturate(src1(I) ∗ 0.6 + src2(I) ∗ 0.4 + 0)
+            # 此处0.6和0.4可修改，一般建议和为1.0
             img = cv2.addWeighted(img_copy, 0.6, cover, 0.4, 0)
 
             get_first_box_point = False
@@ -106,8 +119,20 @@ def draw_circle(event, x, y, flags, param):
 
 cv2.namedWindow("image")
 cv2.setMouseCallback('image', draw_circle)
-key = cv2.waitKey()
-if key & 0xff == ord("s"):
-    if output != "":
-        cv2.imwrite(os.path.join("outputs",output), img)
+print("press `q` to end process, and `r` to clear inputs.")
+while True:
+    key = cv2.waitKey()
+    if key & 0xff == ord("q"):
+        # 按q退出
+        if output != "":
+            cv2.imwrite(os.path.join("outputs",output), img)
+        print("end process.")
+        break
+    elif key & 0xff == ord("r"):
+        # 按r重置
+        points = []
+        boxes = []
+        box_point = []
+        img = cv2.imread(os.path.join("inputs",image))
+        print("reset all inputs")
 cv2.destroyAllWindows()
