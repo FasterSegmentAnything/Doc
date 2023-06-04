@@ -7,36 +7,28 @@ import numpy as np
 from deploy.predictor import SamPredictor
 import models
 
-mymodel=models.SAM_VIT_B
+# 输入
+image="demo3.jpg"
+mymodel=models.SAM_VIT_B            # 使用的模型
+enableWarmup=False                  # 是否启动系统预热
+output=""
 
-def get_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--input", type=str, help="Path to either a single input image or folder of images.")
-    parser.add_argument("--vit-model", type=str, default=mymodel.image_vit_model_path, help="vit model path.")
-    parser.add_argument("--decoder-model", type=str, default=mymodel.onnx_model_path, help="decoder model path.")
-    parser.add_argument("--device", type=str, default="cuda", help="The device to run generation on.")
-    parser.add_argument("--warmup", type=int, default=0, help="Warmup epoch. if set 0, model won`t warmup.")
-    parser.add_argument("--output", type=str, default="", help="Path to the directory where masks will be output.")
-    args = parser.parse_args()
-    return args
+# ------------------------------------ 分割线 ------------------------------------------- #
 
-args = get_args()
+# 初始化SamPredictor
+predictor = SamPredictor(vit_model_path=mymodel.image_vit_model_path,decoder_model_path=mymodel.onnx_model_path,device="cuda",warmup_epoch=3 if enableWarmup else 0)
 
-predictor = SamPredictor(args.vit_model,
-                         args.decoder_model,
-                         args.device,
-                         args.warmup)
+# 读入输入图片
+print("load input:",os.path.join("inputs",image))
+img = cv2.imread(os.path.join("inputs",image))
 
-print("load input:",os.path.join("files/demo/inputs",args.input))
-img = cv2.imread(os.path.join("files/demo/inputs",args.input))
-
-predictor.register_image(img)
-end = time.time()
+# 分析图片特征（内部使用vit模型推理）
+predictor.register_image(img)           
 
 points = []
 boxes = []
 box_point = []
-im0 = img.copy()
+img_copy = img.copy()
 get_first_box_point = False
 
 
@@ -54,20 +46,22 @@ def draw_circle(event, x, y, flags, param):
         print("Add point:", (x, y))
         points.append([x, y])
 
-        mask = predictor.get_mask(points,
-                                  [1 for i in range(len(points))],
-                                  boxes if boxes != [] else None)
+        # 计算一次推理，输入点和框
+        mask = predictor.get_mask(points, [1]*len(points), boxes if boxes != [] else None)
 
         mask = mask["masks"][0][0][:, :, None]
         cover = np.ones_like(img) * 255
         cover = cover * mask
         cover = np.uint8(cover)
-        img = cv2.addWeighted(im0, 0.6, cover, 0.4, 0)
+        img = cv2.addWeighted(img_copy, 0.6, cover, 0.4, 0)
 
         for b in boxes:
+            # 绘制绿色的框
             cv2.rectangle(img, (b[0], b[1]), (b[2], b[3]), (0, 255, 0), 3)
+            # 红点绘制框左上角的点
             cv2.circle(img, (b[0], b[1]), 5, (0, 0, 255), -1)
         for p in points:
+            # 蓝色绘制框左上角的点
             cv2.circle(img, (p[0], p[1]), 5, (255, 0, 0), -1)
 
     elif event == cv2.EVENT_RBUTTONDOWN:
@@ -91,18 +85,22 @@ def draw_circle(event, x, y, flags, param):
             cover = np.ones_like(img) * 255
             cover = cover * mask
             cover = np.uint8(cover)
-            img = cv2.addWeighted(im0, 0.6, cover, 0.4, 0)
+            img = cv2.addWeighted(img_copy, 0.6, cover, 0.4, 0)
 
             get_first_box_point = False
             box_point = []
 
         for b in boxes:
             cv2.rectangle(img, (b[0], b[1]), (b[2], b[3]), (0, 255, 0), 3)
+            # 红点绘制框左上角的点
             cv2.circle(img, (b[0], b[1]), 5, (0, 0, 255), -1)
+            # 红点绘制框右下角的点
             cv2.circle(img, (b[2], b[3]), 5, (0, 0, 255), -1)
         for p in points:
+            # 蓝色绘制框左上角的点
             cv2.circle(img, (p[0], p[1]), 5, (255, 0, 0), -1)
 
+    # 刷新图
     cv2.imshow("image", img)
 
 
@@ -110,6 +108,6 @@ cv2.namedWindow("image")
 cv2.setMouseCallback('image', draw_circle)
 key = cv2.waitKey()
 if key & 0xff == ord("s"):
-    if args.output != "":
-        cv2.imwrite(os.path.join("files/demo/outputs",args.output), img)
+    if output != "":
+        cv2.imwrite(os.path.join("outputs",output), img)
 cv2.destroyAllWindows()

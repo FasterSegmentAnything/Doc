@@ -26,7 +26,6 @@ class SamPredictor:
                  **kwargs):
         self.vit = Vit(vit_model_path, device, warmup_epoch, **kwargs)
         self.decoder = Decoder(decoder_model_path, device, warmup_epoch, **kwargs)
-        input()
 
         self.features = None
         self.origin_image_size = None

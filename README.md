@@ -72,8 +72,7 @@ jtop
 >
 > python版本安装：cd build/Linux/Release/dist && pip3 install ./onnxruntime_gpu-1.12.1-cp38-cp38-linux_aarch64.whl 
 
-> pytorch安装参考：
-> * https://blog.csdn.net/github_34897521/article/details/105123812
+> pytorch安装参考：https://blog.csdn.net/github_34897521/article/details/105123812
 
 硬件环境部署可使用`NVIDIA`提供的`SDK Manager`工具，宿主机磁盘空间和内存一定要大，否则可能引发各种错误，推荐配置如下：
 * 虚拟机建议采用`Ubuntu>=18.04`

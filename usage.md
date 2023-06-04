@@ -2,9 +2,10 @@
   - [1. 准备文件](#1-准备文件)
   - [2. 下载模型](#2-下载模型)
   - [3. 环境准备](#3-环境准备)
-  - [3. 导出`onnx`模型](#3-导出onnx模型)
+  - [4. 导出`onnx`模型](#4-导出onnx模型)
 - [二、模型运行示例(基于onnxruntime)](#二模型运行示例基于onnxruntime)
-  - [1、 分割全图](#1-分割全图)
+  - [1. 基于点的内容识别（应用示例）](#1-基于点的内容识别应用示例)
+  - [2.](#2)
 
 
 # 一、模型导出为ONNX格式
@@ -72,7 +73,7 @@ pip3 install opencv-python pycocotools matplotlib onnxruntime onnx
 pip3 install torch torchvision opencv-contrib-python
 ```
 
-## 3. 导出`onnx`模型
+## 4. 导出`onnx`模型
 > 注意：官方仓库仅支持导出`decoder`模型，导出`image vit`模型的代码为本文档新增。如果在后续版本中遇到问题，请使用本文档所使用的仓库版本。
 
 * 导出`decoder`模型
@@ -95,7 +96,7 @@ pip3 install torch torchvision opencv-contrib-python
 
 ```shell
 FasterSegmentAnything       # 位于`~/`所指代的目录（即home目录）
-├── Doc        #（为Doc项目）
+├── Doc                     #（为Doc项目）
 │   └── 省略
 ├── Models
 │   ├── onnx
@@ -103,7 +104,7 @@ FasterSegmentAnything       # 位于`~/`所指代的目录（即home目录）
 │   │   └── SAM-VITb.onnx
 │   └── raw_model
 │       └── sam_vit_b_01ec64.pth
-└── segment-anything        #（为segment-anything项目）
+└── segment-anything         #（为segment-anything项目）
     └── 省略
 ```
 
@@ -121,12 +122,27 @@ cp -r Models/raw_model/*.pth ~/FasterSegmentAnything/Doc/files/pytorch_model/
 # 二、模型运行示例(基于onnxruntime)
 
 > 需要安装onnxruntime-GPU版运行环境，可参考[文档](README.md)。为了增强文档的说明性，本文档直接对各项基础功能撰写示例代码。
+>
+> 以下代码需要展示绘图，需要开启开发板的`X11-forward`，并在客户机开启桌面转发支持（推荐使用`MobaXterm`）
 
-## 1、 分割全图
+## 1. 基于点的内容识别（应用示例）
 
-[示例代码](demo1.py)
+运行[示例代码](demo1.py)，按`s`退出。
+
+```shell
+cd ~/FasterSegmentAnything/Doc && python3 demo1.py
+```
 
 功能：
 * 输入：一张图片
-* 输出：整张图片的掩码图
+  * 可通过修改示例代码中`image="demo3.jpg"`调整输入
+* 事件：用`鼠标左键`点击输入若干点
+* 输出：每点击一次`鼠标左键`，做一次推理，圈出`鼠标左键`所指定的内容
 
+## 2.
+
+运行[示例代码](demo2.py)：
+
+```shell
+
+```
