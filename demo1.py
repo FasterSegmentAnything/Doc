@@ -18,22 +18,26 @@ output=""
 # ------------------------------------ 分割线 ------------------------------------------- #
 
 # 初始化SamPredictor
-predictor = SamPredictor(vit_model_path=mymodel.image_vit_model_path,decoder_model_path=mymodel.onnx_model_path,device="cuda",warmup_epoch=3 if enableWarmup else 0)
+# "cuda"表示用GPU运算，"cpu"表示用CPU。系统预热能显著提升运行速度，但当前设备启动预热会导致硬件内存不足，因此示例代码预热次数为0次。实际预热推荐>=3次
+predictor = SamPredictor(vit_model_path=mymodel.image_vit_model_path,decoder_model_path=mymodel.onnx_model_path,device="cuda",warmup_epoch=3 if enableWarmup else 0)    
 
-# 读入输入图片
+# 从inputs文件夹读入待识别的图片
 print("load input:",os.path.join("inputs",image))
 img = cv2.imread(os.path.join("inputs",image))
 
-# 分析图片特征（内部使用vit模型推理）
+# 分析图片特征（内部使用vit模型推理，内存需求大，耗时长）
 predictor.register_image(img)           
 
-points = []
-boxes = []
+# 用户构建输入
+points = []       # 识别时用户提示的点集
+boxes = []        # 识别时用户提示的框集
+
+# 一些辅助数据结构
 box_point = []
 img_copy = img.copy()
 get_first_box_point = False     # 用于读取box两点时的flag
 
-
+# 由两个点标记一个框时，计算左上角和右下角点的坐标
 def change_box(box):
     x1 = min(box[0], box[2])
     y1 = min(box[1], box[3])
@@ -41,7 +45,7 @@ def change_box(box):
     y2 = max(box[1], box[3])
     return [x1, y1, x2, y2]
 
-
+# 识别+显示
 def draw_circle(event, x, y, flags, param):
     global img, get_first_box_point, box_point
     if event == cv2.EVENT_LBUTTONDOWN and not get_first_box_point and flags!=cv2.EVENT_FLAG_CTRLKEY+cv2.EVENT_LBUTTONDOWN:
@@ -104,6 +108,7 @@ def draw_circle(event, x, y, flags, param):
             box_point = []
 
         for b in boxes:
+            # 绿色绘制框边线
             cv2.rectangle(img, (b[0], b[1]), (b[2], b[3]), (0, 255, 0), 3)
             # 红点绘制框左上角的点
             cv2.circle(img, (b[0], b[1]), 5, (0, 0, 255), -1)
@@ -116,7 +121,7 @@ def draw_circle(event, x, y, flags, param):
     # 刷新图
     cv2.imshow("image", img)
 
-
+# UI总控
 cv2.namedWindow("image")
 cv2.setMouseCallback('image', draw_circle)
 print("press `q` to end process, and `r` to clear inputs.")
