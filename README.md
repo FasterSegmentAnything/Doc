@@ -68,9 +68,9 @@ jtop
 > 
 > 编译：./build.sh  --skip_tests --use_cuda --config Release --build_shared_lib --parallel 6  --build_wheel  --cuda_home /usr/local/cuda --cudnn_home /usr/local/cuda
 >
-> C++版本安装：添加环境变量
+> * C++版本安装：添加环境变量
 >
-> python版本安装：cd build/Linux/Release/dist && pip3 install ./onnxruntime_gpu-1.12.1-cp38-cp38-linux_aarch64.whl 
+> * python版本安装：cd build/Linux/Release/dist && pip3 install ./onnxruntime_gpu-1.12.1-cp38-cp38-linux_aarch64.whl 
 
 > pytorch安装参考：https://blog.csdn.net/github_34897521/article/details/105123812
 
